@@ -26,7 +26,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--t);font-family:var(--sans);min-height:100vh;padding:20px 14px 60px}
 
-/* Background gradient sáng */
 body::before{content:'';position:fixed;inset:0;
   background:radial-gradient(ellipse at 10% 0%,rgba(0,123,255,.05) 0,transparent 40%),
              radial-gradient(ellipse at 90% 100%,rgba(239,68,68,.05) 0,transparent 40%);
@@ -34,7 +33,6 @@ body::before{content:'';position:fixed;inset:0;
 
 .wrap{max-width:920px;margin:0 auto;position:relative;z-index:1}
 
-/* header */
 header{margin-bottom:28px;border-bottom:1px solid var(--b);padding-bottom:18px}
 .hrow{display:flex;align-items:center;gap:14px;margin-bottom:8px}
 .logo{width:40px;height:40px;border-radius:10px;background:var(--s1);border:1px solid var(--r);
@@ -48,7 +46,6 @@ header h1 span{color:var(--r)}
   border-radius:8px;padding:9px 14px;font-size:11.5px;color:#d97706;
   font-family:var(--mono);display:flex;align-items:center;gap:8px}
 
-/* tabs */
 .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--s1);
   padding:5px;border-radius:12px;border:1px solid var(--b);
   box-shadow: 0 2px 10px rgba(0,0,0,0.02)}
@@ -59,21 +56,16 @@ header h1 span{color:var(--r)}
   box-shadow:0 2px 8px rgba(0,0,0,0.04)}
 .tab-icon{display:block;font-size:18px;margin-bottom:3px}
 
-/* panels */
 .panel{display:none}.panel.active{display:block}
-
-/* two-col */
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:640px){.cols{grid-template-columns:1fr}}
 
-/* card */
 .card{background:var(--s1);border:1px solid var(--b);border-radius:14px;padding:18px;margin-bottom:14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.02)}
 .card-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;
   color:var(--t);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .card-t em{font-style:normal;font-size:15px}
 
-/* form */
 label{display:block;font-size:11px;font-weight:600;color:var(--m);margin-bottom:5px;font-family:var(--sans)}
 input,select,textarea{width:100%;background:var(--s1);border:1px solid var(--b2);
   border-radius:7px;color:var(--t);font-family:var(--mono);font-size:12px;
@@ -82,7 +74,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
 .fr{margin-bottom:14px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-/* button */
 .btn{border:none;cursor:pointer;font-family:var(--sans);font-weight:600;
   border-radius:8px;transition:all .2s;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;justify-content:center}
 .bp{background:var(--r);color:#fff;padding:9px 18px;box-shadow: 0 4px 10px rgba(239,68,68,.3)}
@@ -93,7 +84,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .acts .btn{flex:1}
 
-/* terminal / log (Nền đen cho terminal) */
 .term{background:#0f172a;border:1px solid var(--b);border-radius:10px;
   padding:12px 14px;font-family:var(--mono);font-size:11.5px;
   height:240px;overflow-y:auto;line-height:1.7;box-shadow: inset 0 2px 10px rgba(0,0,0,0.2)}
@@ -108,18 +98,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
 .btn-clear{background:transparent;border:1px solid #334155;color:#94a3b8;font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:var(--mono)}
 .btn-clear:hover{background:#334155;color:#fff}
 
-/* progress */
 .pbar-bg{background:var(--s2);border-radius:99px;height:6px;overflow:hidden;margin:10px 0;border:1px solid var(--b)}
 .pbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--y),var(--r));transition:width .3s}
 .pinfo{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--m);font-weight:600}
 
-/* stats mini */
 .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .ms{background:var(--s1);border:1px solid var(--b);border-radius:10px;padding:12px 10px;text-align:center;box-shadow: 0 2px 6px rgba(0,0,0,0.02)}
 .msv{font-size:22px;font-weight:800;font-family:var(--mono);line-height:1}
 .msl{font-size:10px;color:var(--m);margin-top:5px;font-weight:600;text-transform:uppercase}
 
-/* mock target UI */
 .mock-target{background:var(--bg);border:1px solid var(--b);border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px}
 .mock-avatar{width:56px;height:56px;border-radius:50%;background:var(--s1);border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow: 0 2px 8px rgba(0,0,0,0.05)}
 .mock-info h3{font-size:15px;margin-bottom:4px;color:var(--t);font-weight:700}
@@ -128,7 +115,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
 .status-badge.banned{background:rgba(239,68,68,.1);color:var(--r);border:1px solid rgba(239,68,68,.2)}
 .status-badge.warning{background:rgba(245,158,11,.1);color:#d97706;border:1px solid rgba(245,158,11,.3)}
 
-/* highlight box */
 .hbox{border-radius:8px;padding:12px;font-size:12px;font-family:var(--sans);margin-top:12px;line-height:1.6;border-left:4px solid}
 .hbox-r{background:rgba(239,68,68,.05);border-color:var(--r);color:#b91c1c}
 .hbox-g{background:rgba(16,185,129,.05);border-color:var(--g);color:#047857}
@@ -145,7 +131,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
       <h1>Auto <span>Report</span> Tool</h1>
     </div>
     <span class="htag">social-media-enforcement</span>
-    <span class="htag" style="margin-left:auto;color:var(--r);background:var(--s1);border-color:var(--r)">v2.5 · local mock</span>
+    <span class="htag" style="margin-left:auto;color:var(--r);background:var(--s1);border-color:var(--r)">v2.6 · local mock</span>
   </div>
   <div class="warn-bar">⚠ Toàn bộ demo chạy giả lập trong trình duyệt, không thực hiện request thật. Chỉ sử dụng với mục đích học thuật / demo UI.</div>
 </header>
@@ -167,6 +153,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
         <div class="fr">
           <label>Lý do Report</label>
           <select id="rep-reason">
+            <option value="random">🔀 Trộn ngẫu nhiên (Random Mix)</option>
             <option value="impersonation">Giả mạo người khác (Impersonation)</option>
             <option value="fake_account">Tài khoản giả mạo (Fake Account)</option>
             <option value="harassment">Quấy rối hoặc bắt nạt (Harassment)</option>
@@ -360,6 +347,17 @@ function showTab(t){
   event.currentTarget.classList.add('active');
 }
 
+// Danh sách lý do ngẫu nhiên cho tab Cá nhân
+const randomReasonsList = [
+  "Giả mạo người khác",
+  "Tài khoản giả mạo",
+  "Quấy rối/bắt nạt",
+  "Nội dung không phù hợp",
+  "Spam nội dung",
+  "Ngôn từ kích động",
+  "Chia sẻ hình ảnh nhạy cảm"
+];
+
 // ══════════════════════════════════════ CÁ NHÂN LOGIC ══════════════════════════
 let repRunning = false;
 let repTimer = null;
@@ -420,7 +418,22 @@ function processReport(){
   
   if(isSuccess) {
     successCount++;
-    if(repCount % 5 === 0) repLog(`[✓] Clone ID ${Math.floor(Math.random()*90000)+10000} -> Sent Report payload`, 'tg');
+    if(repCount % 5 === 0) {
+      // Lấy lý do báo cáo
+      const reasonSelect = document.getElementById('rep-reason');
+      const reasonVal = reasonSelect.value;
+      let reasonText = "";
+      
+      if (reasonVal === "random") {
+        // Trộn ngẫu nhiên lý do từ mảng
+        reasonText = randomReasonsList[Math.floor(Math.random() * randomReasonsList.length)];
+      } else {
+        // Lấy lý do cố định đang chọn
+        reasonText = reasonSelect.options[reasonSelect.selectedIndex].text;
+      }
+      
+      repLog(`[✓] Clone ID ${Math.floor(Math.random()*90000)+10000} -> Payload Sent [${reasonText}]`, 'tg');
+    }
   } else {
     failCount++;
     if(repCount % 5 === 0) repLog(`[x] Proxy ${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.x.x bị từ chối kết nối`, 'tr');
