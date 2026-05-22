@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Report Tool — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080b10;--s1:#0f1318;--s2:#161c24;--b:#1f2733;--b2:#2a3545;
+  --acc:#00e5ff;--acc2:#7c3aed;--g:#00ff9d;--r:#ff3d57;--y:#ffcc00;--o:#ff7c2a;
+  --t:#d4e0f0;--m:#4a5f7a;--mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--sans);min-height:100vh;padding:20px 14px 60px}
+body::before{content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 10% 0%,rgba(0,229,255,.06) 0,transparent 40%),
+             radial-gradient(ellipse at 90% 100%,rgba(124,58,237,.06) 0,transparent 40%);
+  pointer-events:none}
+
+/* scanline effect */
+body::after{content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px);
+  pointer-events:none;z-index:0}
+
+.wrap{max-width:920px;margin:0 auto;position:relative;z-index:1}
+
+/* header */
+header{margin-bottom:28px;border-bottom:1px solid var(--b);padding-bottom:18px}
+.hrow{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--bg);border:1px solid var(--r);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 0 16px rgba(255,61,87,.2),inset 0 0 10px rgba(255,61,87,.05)}
+header h1{font-size:20px;font-weight:800;letter-spacing:-.5px}
+header h1 span{color:var(--r)}
+.htag{font-family:var(--mono);font-size:10px;color:var(--m);
+  background:var(--s1);border:1px solid var(--b);border-radius:4px;padding:3px 8px}
+.warn-bar{background:rgba(255,204,0,.07);border:1px solid rgba(255,204,0,.2);
+  border-radius:8px;padding:9px 14px;font-size:11.5px;color:var(--y);
+  font-family:var(--mono);display:flex;align-items:center;gap:8px}
+
+/* tabs */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--s1);
+  padding:5px;border-radius:12px;border:1px solid var(--b)}
+.tab{flex:1;padding:9px 0;text-align:center;font-size:12px;font-weight:700;
+  border-radius:8px;cursor:pointer;transition:all .2s;color:var(--m);border:none;background:none;font-family:var(--sans)}
+.tab:hover{color:var(--t)}
+.tab.active{background:var(--s2);color:var(--r);border:1px solid var(--b2);
+  box-shadow:0 0 12px rgba(255,61,87,.08)}
+.tab-icon{display:block;font-size:18px;margin-bottom:3px}
+
+/* panels */
+.panel{display:none}.panel.active{display:block}
+
+/* two-col */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.cols{grid-template-columns:1fr}}
+
+/* card */
+.card{background:var(--s1);border:1px solid var(--b);border-radius:14px;padding:18px;margin-bottom:14px}
+.card-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--m);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-t em{font-style:normal;font-size:14px}
+
+/* form */
+label{display:block;font-size:11px;color:var(--m);margin-bottom:5px;font-family:var(--mono)}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--b);
+  border-radius:7px;color:var(--t);font-family:var(--mono);font-size:12px;
+  padding:8px 11px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--r)}
+textarea{resize:vertical;min-height:80px}
+.fr{margin-bottom:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* button */
+.btn{border:none;cursor:pointer;font-family:var(--sans);font-weight:700;
+  border-radius:8px;transition:all .2s;display:inline-flex;align-items:center;gap:6px;font-size:12px}
+.bp{background:linear-gradient(135deg,#aa0022,var(--r));color:#fff;padding:9px 18px;
+  box-shadow:0 0 16px rgba(255,61,87,.2)}
+.bp:hover{box-shadow:0 0 24px rgba(255,61,87,.4);transform:translateY(-1px)}
+.bg-g{background:linear-gradient(135deg,#007755,var(--g));color:#000;padding:9px 18px}
+.bg-r{background:rgba(255,61,87,.12);color:var(--r);border:1px solid rgba(255,61,87,.3);padding:9px 18px}
+.bg-r:hover{background:rgba(255,61,87,.2)}
+.bs{background:var(--s2);color:var(--t);border:1px solid var(--b);padding:5px 11px;border-radius:6px}
+.bs:hover{border-color:var(--r);color:var(--r)}
+.btn:disabled{opacity:.3;cursor:not-allowed;transform:none!important}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+/* terminal / log */
+.term{background:#000;border:1px solid var(--b);border-radius:10px;
+  padding:12px 14px;font-family:var(--mono);font-size:11.5px;
+  height:240px;overflow-y:auto;line-height:1.7}
+.term::-webkit-scrollbar{width:3px}
+.term::-webkit-scrollbar-thumb{background:var(--b2)}
+.tg{color:var(--g)}.tr{color:var(--r)}.ta{color:var(--acc)}.ty{color:var(--y)}
+.tm{color:var(--m)}.tt{color:var(--t)}
+.term-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.dot-row{display:flex;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%}
+.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+
+/* progress */
+.pbar-bg{background:var(--bg);border-radius:99px;height:5px;overflow:hidden;margin:8px 0}
+.pbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--o),var(--r));transition:width .3s}
+.pinfo{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--m)}
+
+/* stats mini */
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ms{background:var(--bg);border:1px solid var(--b);border-radius:9px;padding:10px 12px;text-align:center}
+.msv{font-size:20px;font-weight:800;font-family:var(--mono);line-height:1}
+.msl{font-size:10px;color:var(--m);margin-top:3px}
+
+/* mock target UI */
+.mock-target{background:var(--bg);border:1px solid var(--b);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px}
+.mock-avatar{width:60px;height:60px;border-radius:50%;background:var(--s2);border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:24px}
+.mock-info h3{font-size:16px;margin-bottom:4px;color:var(--t)}
+.mock-info p{font-size:12px;color:var(--m);font-family:var(--mono);margin-bottom:2px}
+.status-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-family:var(--mono);margin-top:6px;background:rgba(0,255,157,.1);color:var(--g);border:1px solid rgba(0,255,157,.2)}
+.status-badge.banned{background:rgba(255,61,87,.1);color:var(--r);border:1px solid rgba(255,61,87,.2)}
+
+/* badge */
+.vbadge{display:inline-block;font-family:var(--mono);font-size:10px;
+  padding:2px 8px;border-radius:4px;margin-left:8px}
+.vb-r{background:rgba(255,61,87,.15);color:var(--r);border:1px solid rgba(255,61,87,.3)}
+.vb-g{background:rgba(0,255,157,.12);color:var(--g);border:1px solid rgba(0,255,157,.25)}
+.vb-y{background:rgba(255,204,0,.1);color:var(--y);border:1px solid rgba(255,204,0,.25)}
+
+/* highlight box */
+.hbox{border-radius:8px;padding:10px 13px;font-size:12px;font-family:var(--mono);margin-top:10px;line-height:1.7}
+.hbox-r{background:rgba(255,61,87,.07);border:1px solid rgba(255,61,87,.2);color:var(--r)}
+.hbox-g{background:rgba(0,255,157,.06);border:1px solid rgba(0,255,157,.2);color:var(--g)}
+.hbox-a{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Header -->
+<header>
+  <div class="hrow">
+    <div class="logo">??</div>
+    <div>
+      <h1>Auto <span>Report</span> Tool</h1>
+    </div>
+    <span class="htag">social-media-enforcement</span>
+    <span class="htag" style="margin-left:auto;color:var(--y)">v2.1 · local mock</span>
+  </div>
+  <div class="warn-bar">? Toàn b? demo ch?y gi? l?p trong trình duy?t, không th?c hi?n request th?t. Ch? s? d?ng v?i m?c dích h?c thu?t / demo UI.</div>
+</header>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('profile')"><span class="tab-icon">??</span>Cá Nhân</button>
+  <button class="tab" onclick="showTab('page')"><span class="tab-icon">??</span>Fanpage / Group</button>
+</div>
+
+<!-- --------------------------------------- REPORT CÁ NHÂN ----------------------- -->
+<div class="panel active" id="p-profile">
+  <div class="cols">
+    <div>
+      <!-- Config -->
+      <div class="card">
+        <div class="card-t"><em>??</em> C?u hình t?n công / Report</div>
+        <div class="fr">
+          <label>Target UID / Link trang cá nhân</label>
+          <input type="text" id="rep-url" value="100084736291032" oninput="updateMockTarget()">
+        </div>
+        <div class="fr">
+          <label>Lý do Report</label>
+          <select id="rep-reason">
+            <option value="impersonation">Gi? m?o ngu?i khác (Impersonation)</option>
+            <option value="fake_account">Tài kho?n gi? m?o (Fake Account)</option>
+            <option value="harassment">Qu?y r?i ho?c b?t n?t (Harassment)</option>
+            <option value="inappropriate">Ðang n?i dung không phù h?p</option>
+          </select>
+        </div>
+        
+        <div class="fr row2">
+          <div>
+            <label>Ngu?n Report (Tài kho?n ph?)</label>
+            <select id="rep-source">
+              <option value="100">C?m 100 Clone (Proxy VN)</option>
+              <option value="500">C?m 500 Clone (Proxy Global)</option>
+              <option value="1000">C?m 1000+ Clone (VIP)</option>
+            </select>
+          </div>
+          <div>
+            <label>Thread (Lu?ng ch?y d?ng th?i)</label>
+            <select id="rep-threads">
+              <option value="5">5 Threads</option>
+              <option value="10">10 Threads</option>
+              <option value="20">20 Threads (Fast)</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr row2">
+          <div>
+            <label>S? lu?ng mu?n g?i</label>
+            <input type="number" id="rep-limit" value="100" min="1" max="5000">
+          </div>
+          <div>
+            <label>Delay gi?a các requests (ms)</label>
+            <input type="number" id="rep-delay" value="200" min="50" max="2000">
+          </div>
+        </div>
+        <div class="acts">
+          <button class="btn bp" id="rep-start" onclick="repStart()">? Ch?y Report</button>
+          <button class="btn bs" id="rep-stop" onclick="repStop()" disabled>? D?ng</button>
+          <button class="btn bs" onclick="repReset()">? Reset</button>
+        </div>
+      </div>
+
+      <!-- Mock target -->
+      <div class="card">
+        <div class="card-t"><em>??</em> M?c Tiêu (Target Info)</div>
+        <div class="mock-target">
+          <div class="mock-avatar">??</div>
+          <div class="mock-info">
+            <h3 id="mock-name">Nguy?n Van Target</h3>
+            <p>UID: <span id="mock-uid">100084736291032</span></p>
+            <p>Followers: 2,410</p>
+            <div class="status-badge" id="mock-status">Tr?ng thái: Ho?t d?ng</div>
+          </div>
+        </div>
+        <div class="hbox hbox-a" style="margin-top:12px">
+          ?? H? th?ng s? t? d?ng quét thông tin t? UID d? chu?n b? payload tru?c khi g?i.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Stats -->
+      <div class="mini-stats">
+        <div class="ms"><div class="msv ty" id="rep-s-sent">0</div><div class="msl">Ðã g?i</div></div>
+        <div class="ms"><div class="msv" style="color:var(--g)" id="rep-s-success">0</div><div class="msl">Thành công</div></div>
+        <div class="ms"><div class="msv" style="color:var(--r)" id="rep-s-fail">0</div><div class="msl">L?i / B? ch?n</div></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="card">
+        <div class="card-t"><em>??</em> Ti?n trình Report</div>
+        <div class="pbar-bg"><div class="pbar-fill" id="rep-pbar" style="width:0%"></div></div>
+        <div class="pinfo"><span id="rep-pi-cur">0 / 100</span><span id="rep-pi-pct">0%</span></div>
+      </div>
+
+      <!-- Log -->
+      <div class="card">
+        <div class="card-t"><em>??</em> Action Log</div>
+        <div class="term-hdr">
+          <div class="dot-row"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <button class="btn bs" onclick="document.getElementById('rep-log').innerHTML=''">clear</button>
+        </div>
+        <div class="term" id="rep-log">
+          <span class="tm">$ ready. waiting for command...</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- --------------------------------------- FANPAGE/GROUP ------------------------------- -->
+<div class="panel" id="p-page">
+  <div class="cols">
+    <div style="grid-column: span 2;">
+      <div class="card" style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 40px; margin-bottom: 10px;">??</div>
+        <h3 style="color: var(--y); margin-bottom: 10px;">Tính nang dang b?o trì</h3>
+        <p style="color: var(--m); font-size: 13px;">Ch?c nang Report Hàng Lo?t Fanpage & Group hi?n dang c?p nh?t thu?t toán bypass m?i nh?t.<br>Vui lòng quay l?i sau ho?c s? d?ng ch?c nang Báo Cáo Cá Nhân.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- .wrap -->
+
+<script>
+// -------------------------------------- TAB ----------------------------------
+function showTab(t){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+t).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// -------------------------------------- REPORT LOGIC --------------------------
+let repRunning = false;
+let repTimer = null;
+let repCount = 0;
+let successCount = 0;
+let failCount = 0;
+let repLimit = 100;
+let targetUID = '';
+
+// Helper to log to terminal
+function repLog(msg, cls='tt'){
+  const l = document.getElementById('rep-log');
+  l.innerHTML += `\n<span class="${cls}">${msg}</span>`;
+  l.scrollTop = l.scrollHeight;
+}
+
+// Update target preview dynamically
+function updateMockTarget() {
+  const uid = document.getElementById('rep-url').value;
+  document.getElementById('mock-uid').textContent = uid || 'N/A';
+}
+
+function repStart(){
+  targetUID = document.getElementById('rep-url').value;
+  if(!targetUID) {
+    repLog('[!] Vui lòng nh?p Target UID/Link', 'tr');
+    return;
+  }
+  
+  repLimit = parseInt(document.getElementById('rep-limit').value) || 100;
+  
+  // UI Update
+  document.getElementById('rep-start').disabled = true;
+  document.getElementById('rep-stop').disabled = false;
+  repRunning = true;
+  repCount = 0;
+  successCount = 0;
+  failCount = 0;
+  
+  document.getElementById('mock-status').className = 'status-badge';
+  document.getElementById('mock-status').textContent = 'Tr?ng thái: Ðang b? t?n công...';
+  
+  repLog(`[*] Kh?i t?o chi?n d?ch Report...`, 'ta');
+  repLog(`[*] Target: ${targetUID}`, 'ta');
+  repLog(`[*] Limit: ${repLimit} reports`, 'ta');
+  repLog(`[*] Loading accounts & proxies...`, 'tm');
+  
+  // Fake delay for startup
+  setTimeout(() => {
+    repLog(`[+] S?n sàng! B?t d?u d?y d? li?u...`, 'tg');
+    processReport();
+  }, 1000);
+}
+
+function processReport(){
+  if(!repRunning) return;
+  
+  if(repCount >= repLimit){
+    repLog(`\n[?] CHI?N D?CH HOÀN T?T. Ðã g?i ${repLimit} requests.`, 'tg');
+    repLog(`[!] Ch? ph?n h?i t? h? th?ng ki?m duy?t...`, 'ty');
+    document.getElementById('mock-status').className = 'status-badge banned';
+    document.getElementById('mock-status').textContent = 'Tr?ng thái: B? khóa t?m th?i (Checkpoint)';
+    repStop();
+    return;
+  }
+
+  repCount++;
+  const delay = parseInt(document.getElementById('rep-delay').value) || 200;
+  
+  // Simulate success or fail (85% success rate for sending)
+  const isSuccess = Math.random() > 0.15;
+  
+  if(isSuccess) {
+    successCount++;
+    if(repCount % 5 === 0) { // Log less frequently to avoid flooding
+      repLog(`[?] Clone ID ${Math.floor(Math.random()*90000)+10000} -> Sent Report payload`, 'tg');
+    }
+  } else {
+    failCount++;
+    if(repCount % 5 === 0) {
+      repLog(`[x] Proxy ${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.x.x b? t? ch?i k?t n?i`, 'tr');
+    }
+  }
+
+  // Update UI Stats
+  document.getElementById('rep-s-sent').textContent = repCount;
+  document.getElementById('rep-s-success').textContent = successCount;
+  document.getElementById('rep-s-fail').textContent = failCount;
+  
+  const pct = Math.round((repCount / repLimit) * 100);
+  document.getElementById('rep-pbar').style.width = pct + '%';
+  document.getElementById('rep-pi-cur').textContent = `${repCount} / ${repLimit}`;
+  document.getElementById('rep-pi-pct').textContent = pct + '%';
+
+  // Next iteration
+  repTimer = setTimeout(processReport, delay);
+}
+
+function repStop(){
+  repRunning = false;
+  clearTimeout(repTimer);
+  document.getElementById('rep-start').disabled = false;
+  document.getElementById('rep-stop').disabled = true;
+  if(repCount > 0 && repCount < repLimit) {
+    repLog(`[-] Ðã d?ng th? công.`, 'ty');
+  }
+}
+
+function repReset(){
+  repStop();
+  document.getElementById('rep-log').innerHTML = '<span class="tm">$ ready. waiting for command...</span>';
+  document.getElementById('rep-s-sent').textContent = '0';
+  document.getElementById('rep-s-success').textContent = '0';
+  document.getElementById('rep-s-fail').textContent = '0';
+  document.getElementById('rep-pbar').style.width = '0%';
+  document.getElementById('rep-pi-cur').textContent = '0 / 0';
+  document.getElementById('rep-pi-pct').textContent = '0%';
+  
+  document.getElementById('mock-status').className = 'status-badge';
+  document.getElementById('mock-status').textContent = 'Tr?ng thái: Ho?t d?ng';
+}
+</script>
+</body>
+</html>
