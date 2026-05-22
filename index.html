@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile Report Tool ó Demo</title>
+<title>Profile Report Tool ‚Äî Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -143,41 +143,41 @@ textarea{resize:vertical;min-height:80px}
       <h1>Auto <span>Report</span> Tool</h1>
     </div>
     <span class="htag">social-media-enforcement</span>
-    <span class="htag" style="margin-left:auto;color:var(--y)">v2.1 ∑ local mock</span>
+    <span class="htag" style="margin-left:auto;color:var(--y)">v2.1 ¬∑ local mock</span>
   </div>
-  <div class="warn-bar">? To‡n b? demo ch?y gi? l?p trong trÏnh duy?t, khÙng th?c hi?n request th?t. Ch? s? d?ng v?i m?c dÌch h?c thu?t / demo UI.</div>
+  <div class="warn-bar">? To√†n b? demo ch?y gi? l?p trong tr√¨nh duy?t, kh√¥ng th?c hi?n request th?t. Ch? s? d?ng v?i m?c d√≠ch h?c thu?t / demo UI.</div>
 </header>
 
 <!-- Tabs -->
 <div class="tabs">
-  <button class="tab active" onclick="showTab('profile')"><span class="tab-icon">??</span>C· Nh‚n</button>
+  <button class="tab active" onclick="showTab('profile')"><span class="tab-icon">??</span>C√° Nh√¢n</button>
   <button class="tab" onclick="showTab('page')"><span class="tab-icon">??</span>Fanpage / Group</button>
 </div>
 
-<!-- --------------------------------------- REPORT C¡ NH¬N ----------------------- -->
+<!-- --------------------------------------- REPORT C√Å NH√ÇN ----------------------- -->
 <div class="panel active" id="p-profile">
   <div class="cols">
     <div>
       <!-- Config -->
       <div class="card">
-        <div class="card-t"><em>??</em> C?u hÏnh t?n cÙng / Report</div>
+        <div class="card-t"><em>??</em> C?u h√¨nh t?n c√¥ng / Report</div>
         <div class="fr">
-          <label>Target UID / Link trang c· nh‚n</label>
+          <label>Target UID / Link trang c√° nh√¢n</label>
           <input type="text" id="rep-url" value="100084736291032" oninput="updateMockTarget()">
         </div>
         <div class="fr">
-          <label>L˝ do Report</label>
+          <label>L√Ω do Report</label>
           <select id="rep-reason">
-            <option value="impersonation">Gi? m?o ngu?i kh·c (Impersonation)</option>
-            <option value="fake_account">T‡i kho?n gi? m?o (Fake Account)</option>
+            <option value="impersonation">Gi? m?o ngu?i kh√°c (Impersonation)</option>
+            <option value="fake_account">T√†i kho?n gi? m?o (Fake Account)</option>
             <option value="harassment">Qu?y r?i ho?c b?t n?t (Harassment)</option>
-            <option value="inappropriate">–ang n?i dung khÙng ph˘ h?p</option>
+            <option value="inappropriate">√êang n?i dung kh√¥ng ph√π h?p</option>
           </select>
         </div>
         
         <div class="fr row2">
           <div>
-            <label>Ngu?n Report (T‡i kho?n ph?)</label>
+            <label>Ngu?n Report (T√†i kho?n ph?)</label>
             <select id="rep-source">
               <option value="100">C?m 100 Clone (Proxy VN)</option>
               <option value="500">C?m 500 Clone (Proxy Global)</option>
@@ -199,7 +199,7 @@ textarea{resize:vertical;min-height:80px}
             <input type="number" id="rep-limit" value="100" min="1" max="5000">
           </div>
           <div>
-            <label>Delay gi?a c·c requests (ms)</label>
+            <label>Delay gi?a c√°c requests (ms)</label>
             <input type="number" id="rep-delay" value="200" min="50" max="2000">
           </div>
         </div>
@@ -212,18 +212,18 @@ textarea{resize:vertical;min-height:80px}
 
       <!-- Mock target -->
       <div class="card">
-        <div class="card-t"><em>??</em> M?c TiÍu (Target Info)</div>
+        <div class="card-t"><em>??</em> M?c Ti√™u (Target Info)</div>
         <div class="mock-target">
           <div class="mock-avatar">??</div>
           <div class="mock-info">
             <h3 id="mock-name">Nguy?n Van Target</h3>
             <p>UID: <span id="mock-uid">100084736291032</span></p>
             <p>Followers: 2,410</p>
-            <div class="status-badge" id="mock-status">Tr?ng th·i: Ho?t d?ng</div>
+            <div class="status-badge" id="mock-status">Tr?ng th√°i: Ho?t d?ng</div>
           </div>
         </div>
         <div class="hbox hbox-a" style="margin-top:12px">
-          ?? H? th?ng s? t? d?ng quÈt thÙng tin t? UID d? chu?n b? payload tru?c khi g?i.
+          ?? H? th?ng s? t? d?ng qu√©t th√¥ng tin t? UID d? chu?n b? payload tru?c khi g?i.
         </div>
       </div>
     </div>
@@ -231,14 +231,14 @@ textarea{resize:vertical;min-height:80px}
     <div>
       <!-- Stats -->
       <div class="mini-stats">
-        <div class="ms"><div class="msv ty" id="rep-s-sent">0</div><div class="msl">–„ g?i</div></div>
-        <div class="ms"><div class="msv" style="color:var(--g)" id="rep-s-success">0</div><div class="msl">Th‡nh cÙng</div></div>
+        <div class="ms"><div class="msv ty" id="rep-s-sent">0</div><div class="msl">√ê√£ g?i</div></div>
+        <div class="ms"><div class="msv" style="color:var(--g)" id="rep-s-success">0</div><div class="msl">Th√†nh c√¥ng</div></div>
         <div class="ms"><div class="msv" style="color:var(--r)" id="rep-s-fail">0</div><div class="msl">L?i / B? ch?n</div></div>
       </div>
 
       <!-- Progress -->
       <div class="card">
-        <div class="card-t"><em>??</em> Ti?n trÏnh Report</div>
+        <div class="card-t"><em>??</em> Ti?n tr√¨nh Report</div>
         <div class="pbar-bg"><div class="pbar-fill" id="rep-pbar" style="width:0%"></div></div>
         <div class="pinfo"><span id="rep-pi-cur">0 / 100</span><span id="rep-pi-pct">0%</span></div>
       </div>
@@ -265,8 +265,8 @@ textarea{resize:vertical;min-height:80px}
     <div style="grid-column: span 2;">
       <div class="card" style="text-align: center; padding: 60px 20px;">
         <div style="font-size: 40px; margin-bottom: 10px;">??</div>
-        <h3 style="color: var(--y); margin-bottom: 10px;">TÌnh nang dang b?o trÏ</h3>
-        <p style="color: var(--m); font-size: 13px;">Ch?c nang Report H‡ng Lo?t Fanpage & Group hi?n dang c?p nh?t thu?t to·n bypass m?i nh?t.<br>Vui lÚng quay l?i sau ho?c s? d?ng ch?c nang B·o C·o C· Nh‚n.</p>
+        <h3 style="color: var(--y); margin-bottom: 10px;">T√≠nh nang dang b?o tr√¨</h3>
+        <p style="color: var(--m); font-size: 13px;">Ch?c nang Report H√†ng Lo?t Fanpage & Group hi?n dang c?p nh?t thu?t to√°n bypass m?i nh?t.<br>Vui l√≤ng quay l?i sau ho?c s? d?ng ch?c nang B√°o C√°o C√° Nh√¢n.</p>
       </div>
     </div>
   </div>
@@ -308,7 +308,7 @@ function updateMockTarget() {
 function repStart(){
   targetUID = document.getElementById('rep-url').value;
   if(!targetUID) {
-    repLog('[!] Vui lÚng nh?p Target UID/Link', 'tr');
+    repLog('[!] Vui l√≤ng nh?p Target UID/Link', 'tr');
     return;
   }
   
@@ -323,7 +323,7 @@ function repStart(){
   failCount = 0;
   
   document.getElementById('mock-status').className = 'status-badge';
-  document.getElementById('mock-status').textContent = 'Tr?ng th·i: –ang b? t?n cÙng...';
+  document.getElementById('mock-status').textContent = 'Tr?ng th√°i: √êang b? t?n c√¥ng...';
   
   repLog(`[*] Kh?i t?o chi?n d?ch Report...`, 'ta');
   repLog(`[*] Target: ${targetUID}`, 'ta');
@@ -332,7 +332,7 @@ function repStart(){
   
   // Fake delay for startup
   setTimeout(() => {
-    repLog(`[+] S?n s‡ng! B?t d?u d?y d? li?u...`, 'tg');
+    repLog(`[+] S?n s√†ng! B?t d?u d?y d? li?u...`, 'tg');
     processReport();
   }, 1000);
 }
@@ -341,10 +341,10 @@ function processReport(){
   if(!repRunning) return;
   
   if(repCount >= repLimit){
-    repLog(`\n[?] CHI?N D?CH HO¿N T?T. –„ g?i ${repLimit} requests.`, 'tg');
+    repLog(`\n[?] CHI?N D?CH HO√ÄN T?T. √ê√£ g?i ${repLimit} requests.`, 'tg');
     repLog(`[!] Ch? ph?n h?i t? h? th?ng ki?m duy?t...`, 'ty');
     document.getElementById('mock-status').className = 'status-badge banned';
-    document.getElementById('mock-status').textContent = 'Tr?ng th·i: B? khÛa t?m th?i (Checkpoint)';
+    document.getElementById('mock-status').textContent = 'Tr?ng th√°i: B? kh√≥a t?m th?i (Checkpoint)';
     repStop();
     return;
   }
@@ -387,7 +387,7 @@ function repStop(){
   document.getElementById('rep-start').disabled = false;
   document.getElementById('rep-stop').disabled = true;
   if(repCount > 0 && repCount < repLimit) {
-    repLog(`[-] –„ d?ng th? cÙng.`, 'ty');
+    repLog(`[-] √ê√£ d?ng th? c√¥ng.`, 'ty');
   }
 }
 
@@ -402,7 +402,7 @@ function repReset(){
   document.getElementById('rep-pi-pct').textContent = '0%';
   
   document.getElementById('mock-status').className = 'status-badge';
-  document.getElementById('mock-status').textContent = 'Tr?ng th·i: Ho?t d?ng';
+  document.getElementById('mock-status').textContent = 'Tr?ng th√°i: Ho?t d?ng';
 }
 </script>
 </body>
