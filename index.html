@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile Report Tool — Demo</title>
+<title>Profile & Page Report Tool — Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* GIAO DIỆN SÁNG (LIGHT THEME) */
 :root{
-  --bg:#f4f6f8;       /* Nền trang */
-  --s1:#ffffff;       /* Nền card (Trắng) */
-  --s2:#edf2f7;       /* Nền phụ / Tab */
-  --b:#e2e8f0;        /* Viền sáng */
-  --b2:#cbd5e1;       /* Viền đậm hơn */
-  --acc:#007bff;      /* Xanh dương */
-  --acc2:#6f42c1;     /* Tím */
-  --g:#10b981;        /* Xanh lá */
-  --r:#ef4444;        /* Đỏ */
-  --y:#f59e0b;        /* Vàng/Cam */
-  --t:#1e293b;        /* Text chính (Đen xám) */
-  --m:#64748b;        /* Text phụ (Xám) */
+  --bg:#f4f6f8;       
+  --s1:#ffffff;       
+  --s2:#edf2f7;       
+  --b:#e2e8f0;        
+  --b2:#cbd5e1;       
+  --acc:#007bff;      
+  --acc2:#6f42c1;     
+  --g:#10b981;        
+  --r:#ef4444;        
+  --y:#f59e0b;        
+  --t:#1e293b;        
+  --m:#64748b;        
   --mono:'JetBrains Mono', monospace;
   --sans:'Inter', sans-serif;
 }
@@ -93,7 +93,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .acts .btn{flex:1}
 
-/* terminal / log (Giữ nền đen để log dễ nhìn và ngầu hơn) */
+/* terminal / log (Nền đen cho terminal) */
 .term{background:#0f172a;border:1px solid var(--b);border-radius:10px;
   padding:12px 14px;font-family:var(--mono);font-size:11.5px;
   height:240px;overflow-y:auto;line-height:1.7;box-shadow: inset 0 2px 10px rgba(0,0,0,0.2)}
@@ -145,7 +145,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
       <h1>Auto <span>Report</span> Tool</h1>
     </div>
     <span class="htag">social-media-enforcement</span>
-    <span class="htag" style="margin-left:auto;color:var(--r);background:var(--s1);border-color:var(--r)">v2.1 · local mock</span>
+    <span class="htag" style="margin-left:auto;color:var(--r);background:var(--s1);border-color:var(--r)">v2.5 · local mock</span>
   </div>
   <div class="warn-bar">⚠ Toàn bộ demo chạy giả lập trong trình duyệt, không thực hiện request thật. Chỉ sử dụng với mục đích học thuật / demo UI.</div>
 </header>
@@ -159,7 +159,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
   <div class="cols">
     <div>
       <div class="card">
-        <div class="card-t"><em>⚙️</em> Cấu hình tấn công / Report</div>
+        <div class="card-t"><em>⚙️</em> Cấu hình Report Cá Nhân</div>
         <div class="fr">
           <label>Target UID / Link trang cá nhân</label>
           <input type="text" id="rep-url" value="100084736291032" oninput="updateMockTarget()">
@@ -249,25 +249,110 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);box-shadow: 0 0 0 
           <span class="tm">$ ready. waiting for command...</span>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
 <div class="panel" id="p-page">
   <div class="cols">
-    <div style="grid-column: span 2;">
-      <div class="card" style="text-align: center; padding: 60px 20px;">
-        <div style="font-size: 40px; margin-bottom: 15px;">🚧</div>
-        <h3 style="color: var(--t); margin-bottom: 10px; font-weight: 700;">Tính năng đang bảo trì</h3>
-        <p style="color: var(--m); font-size: 13px; line-height: 1.6;">Chức năng Report Hàng Loạt Fanpage & Group hiện đang cập nhật thuật toán mới.<br>Vui lòng quay lại sau hoặc sử dụng chức năng Báo Cáo Cá Nhân.</p>
+    <div>
+      <div class="card">
+        <div class="card-t"><em>🚩</em> Cấu hình Report Fanpage / Group</div>
+        <div class="fr">
+          <label>Target Page ID / Group ID</label>
+          <input type="text" id="page-url" value="105829471029384" oninput="updatePageTarget()">
+        </div>
+        <div class="fr">
+          <label>Lý do Report</label>
+          <select id="page-reason">
+            <option value="scam">Lừa đảo / Scam (Scam or Fraud)</option>
+            <option value="fake_page">Giả mạo doanh nghiệp (Impersonation)</option>
+            <option value="ip">Vi phạm bản quyền (Intellectual Property)</option>
+            <option value="spam">Spam nội dung hàng loạt</option>
+          </select>
+        </div>
+        
+        <div class="fr row2">
+          <div>
+            <label>Loại Mục Tiêu</label>
+            <select id="page-type">
+              <option value="page">Fanpage (Trang)</option>
+              <option value="group">Group (Nhóm)</option>
+            </select>
+          </div>
+          <div>
+            <label>Thread (Luồng chạy)</label>
+            <select id="page-threads">
+              <option value="10">10 Threads</option>
+              <option value="20">20 Threads</option>
+              <option value="50">50 Threads (Fast)</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr row2">
+          <div>
+            <label>Số lượng muốn gửi</label>
+            <input type="number" id="page-limit" value="200" min="1" max="10000">
+          </div>
+          <div>
+            <label>Delay giữa requests (ms)</label>
+            <input type="number" id="page-delay" value="150" min="50" max="2000">
+          </div>
+        </div>
+        <div class="acts">
+          <button class="btn bp" id="page-start" onclick="pageStart()" style="background:linear-gradient(135deg,var(--acc2),var(--acc));box-shadow: 0 4px 10px rgba(0,229,255,.3)">▶ Chạy Report</button>
+          <button class="btn bs" id="page-stop" onclick="pageStop()" disabled>⏹ Dừng</button>
+          <button class="btn bs" onclick="pageReset()">↺ Reset</button>
+        </div>
       </div>
+
+      <div class="card">
+        <div class="card-t"><em>🎯</em> Mục Tiêu (Target Info)</div>
+        <div class="mock-target">
+          <div class="mock-avatar" style="border-radius:12px; font-size:28px">🛒</div>
+          <div class="mock-info">
+            <h3 id="mock-page-name">Shop Giày Fake Giá Rẻ</h3>
+            <p>ID: <span id="mock-page-id">105829471029384</span></p>
+            <p>Followers / Members: 45,200</p>
+            <div class="status-badge" id="mock-page-status">Trạng thái: Hoạt động</div>
+          </div>
+        </div>
+        <div class="hbox hbox-a" style="border-color:var(--acc2); background:rgba(111, 66, 193, 0.05); color:var(--acc2)">
+          💡 Fanpage/Group thường yêu cầu số lượng report lớn hơn nhiều so với cá nhân để hệ thống đưa vào hàng đợi kiểm duyệt.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="mini-stats">
+        <div class="ms"><div class="msv ty" id="page-s-sent" style="color:var(--y)">0</div><div class="msl">Đã gửi</div></div>
+        <div class="ms"><div class="msv tg" id="page-s-success" style="color:var(--g)">0</div><div class="msl">Thành công</div></div>
+        <div class="ms"><div class="msv tr" id="page-s-fail" style="color:var(--r)">0</div><div class="msl">Bị chặn</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-t"><em>📊</em> Tiến trình Report</div>
+        <div class="pbar-bg"><div class="pbar-fill" id="page-pbar" style="width:0%; background:linear-gradient(90deg,var(--acc2),var(--acc))"></div></div>
+        <div class="pinfo"><span id="page-pi-cur">0 / 200</span><span id="page-pi-pct">0%</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-t"><em>📟</em> Action Log</div>
+        <div class="term-hdr">
+          <div class="dot-row"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <button class="btn-clear" onclick="document.getElementById('page-log').innerHTML='<span class=\'tm\'>$ console cleared...</span>'">CLEAR</button>
+        </div>
+        <div class="term" id="page-log">
+          <span class="tm">$ ready for page/group enforcement...</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 </div><script>
-// ══════════════════════════════════════ TAB ══════════════════════════════════
+// ══════════════════════════════════════ TAB LOGIC ═════════════════════════════════
 function showTab(t){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
@@ -275,54 +360,42 @@ function showTab(t){
   event.currentTarget.classList.add('active');
 }
 
-// ══════════════════════════════════════ REPORT LOGIC ══════════════════════════
+// ══════════════════════════════════════ CÁ NHÂN LOGIC ══════════════════════════
 let repRunning = false;
 let repTimer = null;
 let repCount = 0;
 let successCount = 0;
 let failCount = 0;
 let repLimit = 100;
-let targetUID = '';
 
-// Helper to log to terminal
 function repLog(msg, cls='tt'){
   const l = document.getElementById('rep-log');
   l.innerHTML += `\n<span class="${cls}">${msg}</span>`;
   l.scrollTop = l.scrollHeight;
 }
 
-// Update target preview dynamically
 function updateMockTarget() {
   const uid = document.getElementById('rep-url').value;
   document.getElementById('mock-uid').textContent = uid || 'N/A';
 }
 
 function repStart(){
-  targetUID = document.getElementById('rep-url').value;
-  if(!targetUID) {
-    repLog('[!] Vui lòng nhập Target UID/Link', 'tr');
-    return;
-  }
+  const targetUID = document.getElementById('rep-url').value;
+  if(!targetUID) { repLog('[!] Vui lòng nhập Target UID', 'tr'); return; }
   
   repLimit = parseInt(document.getElementById('rep-limit').value) || 100;
   
-  // UI Update
   document.getElementById('rep-start').disabled = true;
   document.getElementById('rep-stop').disabled = false;
-  repRunning = true;
-  repCount = 0;
-  successCount = 0;
-  failCount = 0;
+  repRunning = true; repCount = 0; successCount = 0; failCount = 0;
   
   document.getElementById('mock-status').className = 'status-badge warning';
   document.getElementById('mock-status').textContent = 'Trạng thái: Đang bị tấn công...';
   
   repLog(`[*] Khởi tạo chiến dịch Report...`, 'ta');
   repLog(`[*] Target: ${targetUID}`, 'ta');
-  repLog(`[*] Limit: ${repLimit} reports`, 'ta');
   repLog(`[*] Loading accounts & proxies...`, 'tm');
   
-  // Fake delay for startup
   setTimeout(() => {
     repLog(`[+] Sẵn sàng! Bắt đầu đẩy dữ liệu...`, 'tg');
     processReport();
@@ -343,23 +416,16 @@ function processReport(){
 
   repCount++;
   const delay = parseInt(document.getElementById('rep-delay').value) || 200;
-  
-  // Simulate success or fail (85% success rate for sending)
   const isSuccess = Math.random() > 0.15;
   
   if(isSuccess) {
     successCount++;
-    if(repCount % 5 === 0) { // Log less frequently to avoid flooding
-      repLog(`[✓] Clone ID ${Math.floor(Math.random()*90000)+10000} -> Sent Report payload`, 'tg');
-    }
+    if(repCount % 5 === 0) repLog(`[✓] Clone ID ${Math.floor(Math.random()*90000)+10000} -> Sent Report payload`, 'tg');
   } else {
     failCount++;
-    if(repCount % 5 === 0) {
-      repLog(`[x] Proxy ${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.x.x bị từ chối kết nối`, 'tr');
-    }
+    if(repCount % 5 === 0) repLog(`[x] Proxy ${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.x.x bị từ chối kết nối`, 'tr');
   }
 
-  // Update UI Stats
   document.getElementById('rep-s-sent').textContent = repCount;
   document.getElementById('rep-s-success').textContent = successCount;
   document.getElementById('rep-s-fail').textContent = failCount;
@@ -369,7 +435,6 @@ function processReport(){
   document.getElementById('rep-pi-cur').textContent = `${repCount} / ${repLimit}`;
   document.getElementById('rep-pi-pct').textContent = pct + '%';
 
-  // Next iteration
   repTimer = setTimeout(processReport, delay);
 }
 
@@ -378,9 +443,7 @@ function repStop(){
   clearTimeout(repTimer);
   document.getElementById('rep-start').disabled = false;
   document.getElementById('rep-stop').disabled = true;
-  if(repCount > 0 && repCount < repLimit) {
-    repLog(`[-] Đã dừng thủ công.`, 'ty');
-  }
+  if(repCount > 0 && repCount < repLimit) repLog(`[-] Đã dừng thủ công.`, 'ty');
 }
 
 function repReset(){
@@ -392,9 +455,109 @@ function repReset(){
   document.getElementById('rep-pbar').style.width = '0%';
   document.getElementById('rep-pi-cur').textContent = '0 / 0';
   document.getElementById('rep-pi-pct').textContent = '0%';
-  
   document.getElementById('mock-status').className = 'status-badge';
   document.getElementById('mock-status').textContent = 'Trạng thái: Hoạt động';
+}
+
+// ══════════════════════════════════════ FANPAGE/GROUP LOGIC ══════════════════════
+let pageRunning = false;
+let pageTimer = null;
+let pageCount = 0;
+let pageSuccess = 0;
+let pageFail = 0;
+let pageLimit = 200;
+
+function pageLog(msg, cls='tt'){
+  const l = document.getElementById('page-log');
+  l.innerHTML += `\n<span class="${cls}">${msg}</span>`;
+  l.scrollTop = l.scrollHeight;
+}
+
+function updatePageTarget() {
+  const id = document.getElementById('page-url').value;
+  document.getElementById('mock-page-id').textContent = id || 'N/A';
+}
+
+function pageStart(){
+  const targetID = document.getElementById('page-url').value;
+  const type = document.getElementById('page-type').options[document.getElementById('page-type').selectedIndex].text;
+  if(!targetID) { pageLog('[!] Vui lòng nhập Target ID', 'tr'); return; }
+  
+  pageLimit = parseInt(document.getElementById('page-limit').value) || 200;
+  
+  document.getElementById('page-start').disabled = true;
+  document.getElementById('page-stop').disabled = false;
+  pageRunning = true;
+  pageCount = 0; pageSuccess = 0; pageFail = 0;
+  
+  document.getElementById('mock-page-status').className = 'status-badge warning';
+  document.getElementById('mock-page-status').textContent = 'Trạng thái: Bị Report hàng loạt...';
+  
+  pageLog(`[*] Khởi tạo chiến dịch đánh sập ${type}...`, 'ta');
+  pageLog(`[*] Target ID: ${targetID}`, 'ta');
+  pageLog(`[*] Đang bypass captcha & lấy token...`, 'tm');
+  
+  setTimeout(() => {
+    pageLog(`[+] Sẵn sàng! Tăng tốc độ luồng đẩy dữ liệu...`, 'tg');
+    processPageReport();
+  }, 1200);
+}
+
+function processPageReport(){
+  if(!pageRunning) return;
+  
+  if(pageCount >= pageLimit){
+    pageLog(`\n[★] CHIẾN DỊCH HOÀN TẤT. Hệ thống đã ghi nhận ${pageLimit} requests.`, 'tg');
+    pageLog(`[!] Mức độ cảnh báo của Trang/Nhóm đang ở mức ĐỎ.`, 'ty');
+    document.getElementById('mock-page-status').className = 'status-badge banned';
+    document.getElementById('mock-page-status').textContent = 'Trạng thái: Hủy đăng (Unpublished)';
+    pageStop();
+    return;
+  }
+
+  pageCount++;
+  const delay = parseInt(document.getElementById('page-delay').value) || 150;
+  const isSuccess = Math.random() > 0.25;
+  
+  if(isSuccess) {
+    pageSuccess++;
+    if(pageCount % 8 === 0) pageLog(`[✓] Node ${Math.floor(Math.random()*900)+100} -> Report Payload Sent`, 'tg');
+  } else {
+    pageFail++;
+    if(pageCount % 8 === 0) pageLog(`[x] Proxy timeout hoặc bị block request`, 'tr');
+  }
+
+  document.getElementById('page-s-sent').textContent = pageCount;
+  document.getElementById('page-s-success').textContent = pageSuccess;
+  document.getElementById('page-s-fail').textContent = pageFail;
+  
+  const pct = Math.round((pageCount / pageLimit) * 100);
+  document.getElementById('page-pbar').style.width = pct + '%';
+  document.getElementById('page-pi-cur').textContent = `${pageCount} / ${pageLimit}`;
+  document.getElementById('page-pi-pct').textContent = pct + '%';
+
+  pageTimer = setTimeout(processPageReport, delay);
+}
+
+function pageStop(){
+  pageRunning = false;
+  clearTimeout(pageTimer);
+  document.getElementById('page-start').disabled = false;
+  document.getElementById('page-stop').disabled = true;
+  if(pageCount > 0 && pageCount < pageLimit) pageLog(`[-] Đã dừng thủ công.`, 'ty');
+}
+
+function pageReset(){
+  pageStop();
+  document.getElementById('page-log').innerHTML = '<span class="tm">$ ready for page/group enforcement...</span>';
+  document.getElementById('page-s-sent').textContent = '0';
+  document.getElementById('page-s-success').textContent = '0';
+  document.getElementById('page-s-fail').textContent = '0';
+  document.getElementById('page-pbar').style.width = '0%';
+  document.getElementById('page-pi-cur').textContent = '0 / 0';
+  document.getElementById('page-pi-pct').textContent = '0%';
+  document.getElementById('mock-page-status').className = 'status-badge';
+  document.getElementById('mock-page-status').textContent = 'Trạng thái: Hoạt động';
 }
 </script>
 </body>
